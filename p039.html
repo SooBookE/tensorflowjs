@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const t1 = tf.tensor1d([1, 2, 3]);
+      // t1.print();
+      t1.print(true); /* 디테일하게 결과 출력 */
+      /*  Tensor   1차원의 요소 3개가 들어간다.
+    [1, 2, 3] 
+    */
+      const t2 = tf.tensor2d([1, 2, 3, 4], [2, 2]);
+      // t2.print();
+      t2.print(1); /* 디테일하게 결과 출력 */
+      /* Tensor    2차원의 요소 2개로 들어간다.
+    [[1, 2],
+     [3, 4]]
+      */
+
+      /* 문제 : 텐서를 2차원으로 1~16의 자료를 4행 4열로 만들어라. */
+
+      const t2s = tf.tensor2d(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+        [4, 4]
+      );
+      // const t2s = tf.tensor2d([
+      //   [1, 2, 3, 4],
+      //   [5, 6, 7, 8],
+      //   [9, 10, 11, 12],
+      //   [13, 14, 15, 16],
+      // ]);   같은 뜻이다.
+      t2s.print(1);
+
+      /* 비동기 API */
+      console.log(
+        t1.data((d) => {
+          console.log(d); // Promise의 형태로 출력한다.
+        })
+      );
+      // const t1p = t1.data((d) => d);
+      // console.log(t1p);
+      /* 위랑 같은 내용. */
+
+      /* 동기 API */
+      console.log(t1.dataSync()); // 그냥 float32array로 출력.
+    </script>
+  </body>
+</html>

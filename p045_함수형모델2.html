@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* 함수형 모델 API */
+      const input = tf.tensor([-2, 1, 0, 5]);
+      const output = tf.layers.activation({ activation: "relu" }).apply(input);
+      output.print();
+
+      // 결과 : Tensor
+      // [0, 1, 0, 5]
+      // relu 함수에 의해 음수는 0으로 반환되고, 양수만 그대로 출력된다.
+
+      /* 함수형 모델도 순차적 모델에서와 같이 model.layers, model.inputLayers, model.outputLayers 를 사용해
+      각 레이어층을 확인해볼 수 있다. */
+    </script>
+  </body>
+</html>

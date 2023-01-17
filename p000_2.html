@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const log = console.log;
+      const x = tf.tensor([1, 2, 3]);
+      log(tf.memory());
+      function f(x) {
+        // const y = x.square();
+        // const z = x.mul(y);
+        // return z;
+        /* 이대로 쓰면 함수를 두 번 사용해서 메모리가 2 증가하는데, */
+        return tf.tidy(() => {
+          const y = x.square();
+          const z = x.mul(y);
+          return z;
+        });
+        /* 이렇게 콜백함수를 쓰면 함수를 한 번 사용한 걸로 취급해서 메모리를 1만 증가시켜,
+        메모리 증가를 최소화 할 수 있다. */
+      }
+      x.print(1);
+      log(tf.memory()); // 펑션을 호출을 안 해서 메모리는 그대로.
+
+      f(x).print(1);
+      log(tf.memory()); // 함수 내부에서 사용을 했기에 메모리가 2 증가했다.
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* 함수형 모델 API */
+      const input = tf.input({ shape: [784] });
+      const dense1 = tf.layers
+        .dense({ units: 16, activation: "relu" })
+        .apply(input);
+      const dense2 = tf.layers
+        .dense({ units: 10, activation: "softmax" })
+        .apply(dense1);
+      const model = tf.model({ inputs: input, outputs: dense2 });
+
+      model.summary();
+      // 이거 쓰면 콘솔에 이케이케 예쁘게 출력해준다.
+      /*
+         _________________________________________________________________
+         Layer (type)                 Output shape              Param #   
+         =================================================================
+         input1 (InputLayer)          [null,784]                0         
+         _________________________________________________________________
+         dense_Dense1 (Dense)         [null,16]                 12560     
+         _________________________________________________________________
+         dense_Dense2 (Dense)         [null,10]                 170       
+         =================================================================
+         Total params: 12730
+         Trainable params: 12730
+         Non-trainable params: 0
+         _________________________________________________________________
+      */
+    </script>
+  </body>
+</html>

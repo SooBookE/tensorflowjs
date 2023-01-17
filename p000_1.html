@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const verbose = true; // 말 많은 친구라는 뜻. 공식 문서에서 사용해라고 권함.
+      //   print(1) or print(true) or print(verbose)
+
+      /* 상수 선언. */
+      const init = tf.initializers.constant({ value: 7 });
+      console.log(init);
+
+      /* 0으로 초기화 된 텐서를 얻기. */
+      tf.zeros([3, 3]).print(1);
+
+      /* 스칼라(방향 없는, 축이 없는 값) */
+      tf.scalar(2).print(verbose); // rank가 0인 value 2인 값이 생성.
+
+      /* 예제 : 3축(3차원)으로 0값 넣어보기. */
+      tf.zeros([3, 4, 4]).print(verbose);
+      console.log(tf.memory());
+      /*
+      행이 1일 때는 0인덱스에 넣어도 되는데, 행이 4니까 z인덱스가 0인덱스에 들어가네...?
+        Tensor
+        dtype: float32
+        rank: 3
+        shape: [3,4,4]
+        values:
+            [[[0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]],
+
+            [[0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]],
+
+            [[0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]]]
+      */
+    </script>
+  </body>
+</html>

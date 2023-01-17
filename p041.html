@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const log = console.log;
+      log(tf.memory());
+      const a = tf.tensor([1, 2, 3]);
+      // const b = tf.tensor([4, 5, 6]);
+      // log(tf.memory());
+      /* 선언만 해줘도 numTensors, numDataBuffers, numBytes가 증가한다. */
+
+      // a.dispose();
+      // log(tf.memory());
+      // b.dispose();
+      // log(tf.memory());
+      /* dispose()로 메모리를 비워줄 수 있다. */
+
+      log(tf.memory());
+      const y = tf.tidy(() => {
+        const result = a.log().neg().round();
+        /* 각각의 연산은 메모리를 차지해버린다. */
+        /* 고로 연산 끝나고 결과만 리턴해서 메모리를 보존하자. */
+        result.print(1);
+        return result;
+      });
+      log(tf.memory());
+    </script>
+  </body>
+</html>

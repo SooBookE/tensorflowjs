@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* 순차적 모델 API */
+
+      // const model = tf.sequential({
+      //   layers: [
+      //     tf.layers.dense({ inputShape: [784], units: 16, activation: "relu" }),
+      //     /* relu는 0으로 출력되다가 0을 지나면 직선 함수의 형태를 띈다. */
+      //     tf.layers.dense({ units: 10, activation: "softmax" }),
+      //     /* softmax는 0으로 출력되다가 0을 지나면 곡선 함수의 형태를 띈다. */
+      //   ],
+      // });
+      // console.log(model);
+      /* 선언할 때 안에 넣어서 작성하기. */
+
+      const model = tf.sequential();
+      model.add(
+        tf.layers.dense({ inputShape: [784], units: 16, activation: "relu" })
+      );
+      model.add(tf.layers.dense({ units: 10, activation: "softmax" }));
+      console.log(model);
+      /* 선언한 후에 model.add()로 입력하기. */
+    </script>
+  </body>
+</html>

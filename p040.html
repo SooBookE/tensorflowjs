@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const t1 = tf.tensor([1, 2, 3, 4]);
+      const t2 = tf.tensor([10, 20, 30, 40]);
+
+      t1.add(t2).print(1); // console.log(t1.add(t2).print(1)); 혹은, tf.add(t1, t2).print(1);  같은 의미.
+
+      t1.add(t2).square().print(1);
+      t1.add(t2).log().square().print(1);
+      /* 메소드 체이닝 가능하다. */
+      /* 그러나 텐서는 GPU 메모리를 사용하는데, GPU 메모리에서 수행하는 가비지 컬렉션 알고리즘이 따로 존재하지 않으므로,
+      따로 메모리를 명시적으로 관리해줘야 한다. */
+    </script>
+  </body>
+</html>

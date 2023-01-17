@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const a = tf.tensor([1, 2, 3]);
+      // 연산 체인은 텐서플로의 세션처럼 계산을 자동으로 수행하지 않는다.
+      const result = a.square().log().neg().floor();
+
+      // 결과를 가져오게 하면 계산 결과 및 관련 연산이 모두 수행된다.
+      result.data().then((d) => {
+        console.log(d);
+      });
+      console.log(tf.memory());
+
+      /* tidy()로 깔끔하게 만들어보자. */
+      // dispose()나 tidy()를 써서 메모리 관리해라는 뜻..?
+
+      // const t = tf.tidy(() => {
+      //   const result = a.square().log().neg().floor();
+      //   result.print(1);
+      //   return result;
+      // });
+      // console.log(tf.memory());
+    </script>
+  </body>
+</html>
