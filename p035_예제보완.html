@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      const xs = tf.tensor2d(
+        [
+          [0, 0],
+          [0, 1],
+          [1, 0],
+          [1, 1],
+        ],
+        [4, 2]
+      );
+      const ys = tf.tensor2d([0, 1, 1, 0], [4, 1]);
+
+      /* 히든레이어 추가.(원하는 근사값을 얻어내기 위해 자료를 가공하는 작업.
+      히든레이어에서 사용되는 unit이 몇이든 결과만 하나로 출력하면 된다.) */
+      function createModel() {
+        const model = tf.sequential();
+        model.add(
+          tf.layers.dense({ units: 8, activation: "tanh", inputShape: [2] })
+        );
+        // tanh의 그래프가 y축으로 -1~1의 값이면서 시그모이드함수와 비슷한 형태라 사용했다.
+        // model.add(
+        //   tf.layers.dense({ units: 8, activation: "relu", inputShape: [2] })
+        // );
+        // model.add(
+        //   tf.layers.dense({ units: 8, activation: "softmax", inputShape: [2] })
+        // );
+        /* 근데 softmax나 relu 써도 잘 나오는디? */
+        // model.add(tf.layers.dense({ units: 8, inputShape: [2] })); 이러면 결과가 0.5로 나온다.
+        // units는 자료를 받아서 출력값을 몇 개로 뱉어내느냐의 정보다.
+        model.add(
+          tf.layers.dense({
+            units: 1,
+            activation:
+              "sigmoid" /* 알아서 받기 때문에 그 다음은 생략 가능. inputShape: [8]*/,
+          })
+        );
+        model.compile({
+          loss: "binaryCrossentropy",
+          optimizer: "adam",
+          lr: 0.1 /* 얘는 뭔지 아직 모름 ㅎㅎ */,
+        });
+
+        return model;
+      }
+
+      const fitParam = {
+        batchSize: 1,
+        epochs: 4000, // 포트가 8개인 레이어가 추가 됐으므로, 연산이 8배는 지연될 것이다.
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            console.log("epoch", epoch, logs, "RMSE=>", Math.sqrt(logs.loss));
+          },
+        },
+      };
+
+      async function createNpredict() {
+        const model = createModel();
+        await model.fit(xs, ys, fitParam);
+        model.predict(tf.tensor2d([[0, 1]], [1, 2])).print();
+      }
+
+      createNpredict();
+      // 결과 : Tensor
+      // [[0.9997163],]
+      // 기본 예제보다 시간은 오래 걸리지만, 더 근사값이 나온 것을 볼 수 있다.
+    </script>
+  </body>
+</html>
