@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* 지금은 단순히 결과값으로 학습이 잘 됐는지 확인하는 과정.
+      곧, 식을 도출시켜서 가중치와 편향을 확인할 것이다. */
+      let insert = [25, 26, 27, 28]; // 아마 곱하기 3하고 -6로 계산.
+      let comeout = [69, 72, 75, 78];
+      let xt = tf.tensor(insert);
+      let yt = tf.tensor(comeout);
+      let q = [29];
+      let qt = tf.tensor(q);
+
+      let X = tf.input({ shape: [1] });
+      let Y = tf.layers.dense({ units: 1 }).apply(X);
+      let model = tf.model({ inputs: X, outputs: Y });
+      let compileParam = {
+        optimizer: tf.train.adam(),
+        loss: tf.losses.meanSquaredError,
+      };
+      model.compile(compileParam);
+
+      const fitParam = {
+        epochs: 6000,
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            console.log(
+              "epoch : ",
+              epoch,
+              logs,
+              "RMSE => ",
+              Math.sqrt(logs.loss)
+            );
+          },
+        },
+      };
+      model.fit(xt, yt, fitParam).then((_) => {
+        // let result = model.predict(xt); // 테스트용 선언.
+        let result = model.predict(qt);
+        result.print();
+        // model.save("downloads://my-model"); // 학습 내용을 파일로 뱉어낸다.
+        model.save("localstorage://my-model-1"); // 학습 내용을 로컬스토리지로 뱉어낸다.
+        console.log("학습이 저장됐습니다.");
+      });
+    </script>
+  </body>
+</html>

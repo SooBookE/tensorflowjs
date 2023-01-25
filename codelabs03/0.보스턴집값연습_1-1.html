@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="./0_data.js"></script>
+  </head>
+  <body>
+    <script>
+      const insert = arr;
+      const comeout = arr_result;
+      const xt = tf.tensor2d(insert);
+      const yt = tf.tensor(comeout);
+
+      console.log(xt);
+      console.log(yt);
+
+      // const X = tf.input({ shape: [24315, 13] });
+      // const Y = tf.layers.dense({ units: 1 }).apply(X);
+      // const model = tf.model({ inputs: X, outputs: Y });
+      // const compileParam = {
+      //   optimizer: tf.train.adam(),
+      //   loss: tf.losses.meanSquaredError,
+      // };
+      // model.compile(compileParam);
+
+      // const fitParam = {
+      //   epochs: 6000,
+      //   callbacks: {
+      //     onEpochEnd: function (epoch, logs) {
+      //       console.log(
+      //         "epoch : ",
+      //         epoch,
+      //         logs,
+      //         "RMSE => ",
+      //         Math.sqrt(logs.loss)
+      //       );
+      //     },
+      //   },
+      // };
+      // model.fit(xt, yt, fitParam).then((_) => {
+      //   model.save("localstorage://my-model-1");
+      //   console.log("학습 저장.");
+      // });
+    </script>
+  </body>
+</html>

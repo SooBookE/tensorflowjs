@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // 1. 지도학습하는 과거 데이터
+      let tem = [25, 26, 27, 28];
+      let sel = [50, 52, 54, 56];
+      let xt = tf.tensor(tem); // 텐서로 변환
+      let yt = tf.tensor(sel); // 텐서로 변환
+
+      // 2. 모델의 모양 만들기.
+      let X = tf.input({ shape: [1] }); // 값 하나가 들어온다.
+      let Y = tf.layers.dense({ units: 1 }).apply(X); // apply를 통해 연결.
+      let model = tf.model({ inputs: X, outputs: Y }); // 인/아웃풋 지정.
+      let compileParam = {
+        optimizer: tf.train.adam(),
+        loss: tf.losses.meanSquaredError,
+      }; // 최적화의 loss(오차) 측정 방법 종류.
+      model.compile(compileParam); // 컴파일. 언어의 컴파일과 다른 개념.
+
+      // 3. 데이터 학습 시작.
+      const fitParam = {
+        epochs: 4000, // 반복 횟수.
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            // 반복마다 실행할 콜백.
+            console.log(
+              "epoch : ",
+              epoch,
+              logs,
+              "RMSE => ",
+              Math.sqrt(logs.loss)
+            );
+          },
+        },
+      };
+      model.fit(xt, yt, fitParam).then((_) => {
+        let result = model.predict(xt); // 학습이 잘 됐는지 확인.
+        result.print();
+      });
+    </script>
+  </body>
+</html>

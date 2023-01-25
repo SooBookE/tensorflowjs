@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tensorflowjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* 1. 전이학습 */
+      //   const tem = [29, 30, 31, 32]; // 예측 결과 : [81, 84, 87, 90]
+      //   const xt = tf.tensor(tem);
+
+      /* 2. 모델분석 */
+      const temp = [29];
+      const xt = tf.tensor(temp);
+
+      // 이제 가중치(weight = kernel)와 편향(bias)을 파악해보자.
+      tf.loadLayersModel("localstorage://my-model-1") // 로컬스토리지에 저장된 학습 모델 땡겨오기.
+        .then((model) => {
+          console.log("이전 모델 로드완료.");
+          let newResult = model.predict(xt);
+          newResult.print();
+
+          const ele = model.getWeights(); // 요소 뽑기.
+          console.log(ele);
+          let rel = 0; // 가중치 담기 위한 변수.
+          let bia = 0; // 편향 담기 위한 변수.
+          /* 프로미스값이라 뺄 수 없기 때문에 강제로 외부 변수에 넣어줘야 사용할 수 있게 된다. */
+          const weight = ele[0].array().then((array) => (rel = array[0][0])); // 가중치 뽑기.
+          const bias = ele[1].array().then((array) => (bia = array[0])); // 편향 뽑기.
+          console.log(weight); // 결과 : 2.6907546520233154
+          console.log(bias); // 결과 : 2.2084929943084717
+          // 결과는 y = 2.6907546520233154(가중치) * x + 2.2084929943084717(편향)
+        });
+    </script>
+  </body>
+</html>
