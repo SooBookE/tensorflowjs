@@ -12,39 +12,40 @@
     <script>
       const insert = arr;
       const comeout = arr_result;
-      const xt = tf.tensor2d(insert);
+      const xt = tf.tensor(insert);
       const yt = tf.tensor(comeout);
+      // console.log(insert);
+      // console.log(comeout);
+      // console.log(xt);
+      // console.log(yt);
 
-      console.log(xt);
-      console.log(yt);
+      const X = tf.input({ shape: [13] });
+      const Y = tf.layers.dense({ units: 1 }).apply(X);
+      const model = tf.model({ inputs: X, outputs: Y });
+      const compileParam = {
+        optimizer: tf.train.adam(),
+        loss: tf.losses.meanSquaredError,
+      };
+      model.compile(compileParam);
 
-      // const X = tf.input({ shape: [24315, 13] });
-      // const Y = tf.layers.dense({ units: 1 }).apply(X);
-      // const model = tf.model({ inputs: X, outputs: Y });
-      // const compileParam = {
-      //   optimizer: tf.train.adam(),
-      //   loss: tf.losses.meanSquaredError,
-      // };
-      // model.compile(compileParam);
-
-      // const fitParam = {
-      //   epochs: 6000,
-      //   callbacks: {
-      //     onEpochEnd: function (epoch, logs) {
-      //       console.log(
-      //         "epoch : ",
-      //         epoch,
-      //         logs,
-      //         "RMSE => ",
-      //         Math.sqrt(logs.loss)
-      //       );
-      //     },
-      //   },
-      // };
-      // model.fit(xt, yt, fitParam).then((_) => {
-      //   model.save("localstorage://my-model-1");
-      //   console.log("학습 저장.");
-      // });
+      const fitParam = {
+        epochs: 6000,
+        callbacks: {
+          onEpochEnd: function (epoch, logs) {
+            console.log(
+              "epoch : ",
+              epoch,
+              logs,
+              "RMSE => ",
+              Math.sqrt(logs.loss)
+            );
+          },
+        },
+      };
+      model.fit(xt, yt, fitParam).then((_) => {
+        model.save("localstorage://my-model-1");
+        console.log("학습 저장.");
+      });
     </script>
   </body>
 </html>

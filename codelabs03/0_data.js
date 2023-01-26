@@ -1029,7 +1029,7 @@ const data = `0.00632  18.00   2.310  0  0.5380  6.5750  65.20  4.0900   1  296.
 
 // console.log(data.split("\n"));
 let arr = [];
-for (let i = 0; i < data.length; i++) {
+for (let i = 0; i < data.split("\n").length; i++) {
   if (i % 2 == 0) {
     arr[i] = data.split("\n")[i] + " " + data.split("\n")[i + 1];
   }
@@ -1051,7 +1051,7 @@ for (let i = 0; i < arr.length; i++) {
 
 let arr_result = [];
 for (let i = 0; i < arr.length; i++) {
-  arr_result[i] = arr[i].pop();
+  arr_result[i] = [arr[i].pop()];
 }
 
 // console.log(arr);
