@@ -20,7 +20,7 @@
 
       const main = async () => {
         const cam = await tf.data.webcam(videoElement);
-        const mnet = await mobilenet.load(); // 2
+        const mnet = await mobilenet.load(); // 2       위아래 바꾸면 동작하지 않는다.
         const img = await cam.capture();
         const result = await mnet.classify(img); // 2
         img.print();

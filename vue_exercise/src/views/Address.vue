@@ -22,51 +22,50 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      inData: '',
-      trans: ''
-    }
+      inData: "",
+      trans: "",
+    };
   },
   methods: {
-    check () {
-      console.log(process.env.VUE_APP_ID)
-      console.log(process.env.VUE_APP_PW)
+    check() {
+      console.log(process.env.VUE_APP_ID);
+      console.log(process.env.VUE_APP_PW);
     },
-    getTrans () {
-      const cid = process.env.VUE_APP_ID
-      const cpw = process.env.VUE_APP_PW
+    getTrans: async function () {
+      this.trans = "변환중.....";
+      // const cid = process.env.VUE_APP_ID;
+      // const csecret = process.env.VUE_APP_PW;
 
-      const input = this.inData
-      const query = encodeURI(input)
-      // console.log(input)
+      const query = encodeURI(this.inData);
+      // console.log(query);
 
-      const url = '/v1/util/shorturl'
+      const url = "/v1/util/shorturl";
 
-      this.trans = '변환중.....'
+      const frm = new FormData();
+      frm.append("url", query);
 
-      const frm = new FormData()
-      frm.append('url', query)
-
-      axios
+      await axios
         .post(url, frm, {
           headers: {
-            'Content-Type': 'application/json',
-            'X-Naver-Client-Id': cid,
-            'X-Naver-Client-Secret': cpw
-          }
+            "Content-Type": "plain/text",
+            "X-Naver-Client-Id": "n_FWLqY7W0auvuhlNrRl",
+            "X-Naver-Client-Secret": "LnnVWfJgMG",
+          },
         })
         .then((res) => {
-          const rst = res
-          console.log(rst)
+          // const rst = res
+          console.log(res.data);
         })
-    }
-  }
-}
+        .catch((err) => console.log(err));
+    },
+  },
+};
 </script>
 
 <style></style>
