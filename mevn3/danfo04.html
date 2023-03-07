@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습4</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <script>
+      let json_data = [
+        { A: 0.444, B: 4.222, C: -1.555, D: -1.1111 },
+        { A: 3.402, B: 2.124, C: -5.315, D: 2.742 },
+        { A: 0.203, B: -7.125, C: 1.255, D: 9.1219 },
+        { A: -3.583, B: 1.002, C: -8.327, D: -6.5511 },
+      ];
+      // 여러 요소를 DataFrame으로 담을 수 있다.
+      let df = new dfd.DataFrame(json_data);
+      df.print();
+    </script>
+  </body>
+</html>

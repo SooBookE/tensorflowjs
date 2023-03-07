@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습8</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <div id="s_table"></div>
+    <div id="s_line"></div>
+    <div id="d_table"></div>
+    <div id="d_line"></div>
+
+    <script>
+      const s = new dfd.Series([20, 21, 22, 23]);
+      s.print();
+      s.describe().print(); // 나름의 데이터 설명을 해준다.
+
+      s.plot("s_table") // 플롯은 id로 잡아준다.
+        .table(); // 표로 표시해준다.
+      s.plot("s_line") // 플롯은 id로 잡아준다.
+        .line(); // 2차함수로 표시해준다.
+
+      // 여러 방식으로 데이터를 넣을 수 잇다.
+      /* 배열 방식. */
+      const d1 = new dfd.DataFrame([
+        { 온도: 20, 요일: "월", 판매량: 40 },
+        { 온도: 21, 요일: "화", 판매량: 42 },
+        { 온도: 22, 요일: "수", 판매량: 44 },
+        { 온도: 23, 요일: "목", 판매량: 46 },
+      ]);
+      d1.print();
+
+      /* 객체 방식. */
+      const d2 = new dfd.DataFrame({
+        온도: [20, 21, 22, 23],
+        요일: ["월", "화", "수", "목"],
+        판매량: [40, 42, 44, 46],
+      });
+      d2.print();
+
+      /* 파일 로드 방식. */
+      dfd.readCSV("./data.csv").then((data) => {
+        data.print();
+        data.describe().print();
+        data.plot("d_table").table();
+        data.plot("d_line").line();
+      });
+      // readCSV()는 프로미스다.
+
+      // dfd.readCSV("./danfo.csv").then((data) => data.print());   // 하면 ANSI면 안 되네? utf-8로 바꿔보자.
+    </script>
+  </body>
+</html>

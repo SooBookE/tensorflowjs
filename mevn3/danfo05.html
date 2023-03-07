@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습5</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <script>
+      let dates = new dfd.dateRange({
+        start: "2020-03-01",
+        end: "2023-03-01",
+        period: 4,
+        freq: "Y",
+      });
+      // 1년 주기로 4년으로 자료를 작성한다.
+      // console.log(dates);
+
+      const obj_data = {
+        A: dates, // 일자 요소.
+        B: ["val1", "val2", "val3", "val4"], // 라벨.
+        C: [10, 20, 30, 40], // 값.
+        D: [1.2, 3.45, 60.1, 33.3], // 값.
+        E: ["test", "train", "test", "train"], // 훈련/테스트 라벨.
+      };
+      let df = new dfd.DataFrame(obj_data);
+      df.print();
+      df.ctypes.print(); // 데이터 타입 확인 가능.
+    </script>
+  </body>
+</html>

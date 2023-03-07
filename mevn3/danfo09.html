@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습9</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <div id="d_table"></div>
+    <div id="d_line"></div>
+
+    <script>
+      dfd.readCSV("./data.csv").then((data) => {
+        data.print();
+        data.describe().print();
+        data.plot("d_table").table();
+        data.plot("d_line").line();
+        // console.log(data, data["온도"]); // 콘솔로 찍으면 디테일하게 객체 내용을 출력한다.
+
+        /* 1. 프린트로 추출. */
+        data["온도"].print(); // 프린트로 해당 요소들만 뽑을 수 있다.
+
+        /* 2. label of content로 추출.(.loc  단포에서 쓰는 메서드.) */
+        data.loc({ columns: ["온도", "판매량"] }).print(); // 해당 열들만 라벨을 매기며 뽑을 수 있다.
+        data.loc({ rows: [1, 3] }).print(); // 해당 행들만 라벨을 매기며 뽑을 수 있다.
+        data.loc({ columns: ["온도", "판매량"], rows: [1, 3] }).print(); // 해당 요소들만 라벨을 매기며 뽑을 수 있다.
+
+        /* 3. 논리비교를 이용한 필터링으로 출력. */
+        data.query(data["온도"].gt(20)).print(); // 이걸 써야 한다.
+        // is to로 온도가 > 20 인 요소들을 뽑는다.
+
+        // data.query({ column: "온도", is: ">", to: 20 }).print(); // 1.0.0 이전 버전만 된다.
+
+        /* ※연습: 온도는 21도 이상. 판매량은 45개 미만에 해당하는 내용만 출력하라. */
+        data.query(data["온도"].ge(21).and(data["판매량"].lt(45))).print();
+        // gte 아니면 ge 등으로 사용한다....
+
+        /* 4. 행 추가. */
+        const newRow = new dfd.DataFrame({
+          온도: [24, 25],
+          요일: ["금", "토"],
+          판매량: [48, 50],
+        });
+        data.append(newRow, [4, 5]).print();
+        // 인덱스를 추가하려는 갯수 만큼 라벨링을 해줘야 한다.
+      });
+    </script>
+  </body>
+</html>

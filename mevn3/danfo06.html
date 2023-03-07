@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습6</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <script>
+      const tensor_arr = tf.tensor2d([
+        [12, 34, 2.2, 2],
+        [30, 30, 2.1, 7],
+      ]); // 2차원 텐서 만들기.
+
+      const df = new dfd.DataFrame(tensor_arr, {
+        columns: ["A1", "A2", "A3", "A4"],
+      }); // 컬럼에 옵션으로 라벨 지정 가능.
+
+      df.print();
+      df.ctypes.print(); // 데이터 타입 확인 가능.
+    </script>
+  </body>
+</html>
