@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>danfo 연습7</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!-- 단포js cdn -->
+  </head>
+  <body>
+    <a href="javascript:window.history.back();">뒤로가기</a>
+    <script>
+      const arr_data = [
+        ["val1", 10, 1.2, "test"],
+        ["val2", 20, 31.3, "train"],
+        ["val3", 30, 4.14, "test"],
+        ["val4", 40, 55.3, "train"],
+      ];
+      // const df = new dfd.DataFrame(arr_data); // 배열로 들어가면 컬럼에 배열 인덱스가 들어감.
+      const df = new dfd.DataFrame(arr_data, {
+        columns: ["A1", "A2", "A3", "A4"], // 열에 옵션으로 라벨 지정 가능.
+        index: ["A1", "A2", "A3", "A4"], // 행에 옵션으로 라벨 지정 가능.
+      });
+
+      df.print();
+      df.head(2).print(); // 위에서 두 개 출력.
+      df.tail(2).print(); // 밑에서 두 개 출력.
+      df.ctypes.print(); // 데이터 타입 확인 가능.
+    </script>
+  </body>
+</html>
